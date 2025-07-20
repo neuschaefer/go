@@ -350,7 +350,7 @@ func writeDconv(w io.Writer, p *Prog, a *Addr, abiDetail bool) {
 			if a.Reg != 0 {
 				fmt.Fprintf(w, "(%v)", Rconv(int(a.Reg)))
 			}
-		case "arm64":
+		case "arm64", "arm64be":
 			op := ops[((v>>22)&3)<<1:]
 			r := (v >> 16) & 31
 			fmt.Fprintf(w, "%s%c%c%d", Rconv(r+RBaseARM64), op[0], op[1], (v>>10)&63)

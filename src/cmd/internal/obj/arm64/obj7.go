@@ -1179,3 +1179,13 @@ var Linkarm64 = obj.LinkArch{
 	UnaryDst:       unaryDst,
 	DWARFRegisters: ARM64DWARFRegisters,
 }
+
+var Linkarm64be = obj.LinkArch{
+	Arch:           sys.ArchARM64BE,
+	Init:           buildop,
+	Preprocess:     preprocess,
+	Assemble:       span7,
+	Progedit:       progedit,
+	UnaryDst:       unaryDst,
+	DWARFRegisters: ARM64DWARFRegisters,
+}

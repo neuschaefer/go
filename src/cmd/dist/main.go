@@ -103,6 +103,8 @@ func main() {
 				// We don't support any of the OS X versions that run on 32-bit-only hardware anymore.
 				gohostarch = "amd64"
 			}
+		case strings.Contains(out, "aarch64_be"), strings.Contains(out, "arm64be"):
+			gohostarch = "arm64be"
 		case strings.Contains(out, "aarch64"), strings.Contains(out, "arm64"):
 			gohostarch = "arm64"
 		case strings.Contains(out, "arm"):

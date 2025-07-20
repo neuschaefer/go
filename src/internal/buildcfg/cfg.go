@@ -384,7 +384,7 @@ func GOGOARCH() (name, value string) {
 		return "GOAMD64", fmt.Sprintf("v%d", GOAMD64)
 	case "arm":
 		return "GOARM", GOARM.String()
-	case "arm64":
+	case "arm64", "arm64be":
 		return "GOARM64", GOARM64.String()
 	case "mips", "mipsle":
 		return "GOMIPS", GOMIPS
@@ -414,7 +414,7 @@ func gogoarchTags() []string {
 			list = append(list, fmt.Sprintf("%s.%d", GOARCH, i))
 		}
 		return list
-	case "arm64":
+	case "arm64", "arm64be":
 		var list []string
 		major := int(GOARM64.Version[1] - '0')
 		minor := int(GOARM64.Version[3] - '0')

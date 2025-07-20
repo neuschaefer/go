@@ -1482,7 +1482,7 @@ func isInlinableMemclr(c *Config, sz int64) bool {
 	// TODO: expand this check to allow other architectures
 	// see CL 454255 and issue 56997
 	switch c.arch {
-	case "amd64", "arm64":
+	case "amd64", "arm64", "arm64be":
 		return true
 	case "ppc64le", "ppc64", "loong64":
 		return sz < 512
@@ -1503,7 +1503,7 @@ func isInlinableMemmove(dst, src *Value, sz int64, c *Config) bool {
 	switch c.arch {
 	case "amd64":
 		return sz <= 16 || (sz < 1024 && disjoint(dst, sz, src, sz))
-	case "arm64":
+	case "arm64", "arm64be":
 		return sz <= 64 || (sz <= 1024 && disjoint(dst, sz, src, sz))
 	case "386":
 		return sz <= 8
@@ -2396,7 +2396,7 @@ func canRotate(c *Config, bits int64) bool {
 		return false
 	}
 	switch c.arch {
-	case "386", "amd64", "arm64", "loong64", "riscv64":
+	case "386", "amd64", "arm64", "arm64be", "loong64", "riscv64":
 		return true
 	case "arm", "s390x", "ppc64", "ppc64le", "wasm":
 		return bits >= 32

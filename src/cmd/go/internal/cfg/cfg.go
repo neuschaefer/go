@@ -512,7 +512,7 @@ func GetArchEnv() (key, val string, changed bool) {
 	switch Goarch {
 	case "arm":
 		return "GOARM", GOARM, goARMChanged
-	case "arm64":
+	case "arm64", "arm64be":
 		return "GOARM64", GOARM64, goARM64Changed
 	case "386":
 		return "GO386", GO386, go386Changed

@@ -217,6 +217,9 @@ func NewConfig(arch string, types Types, ctxt *obj.Link, optimize, softfloat boo
 		c.FPReg = framepointerRegARM
 		c.LinkReg = linkRegARM
 		c.hasGReg = true
+	case "arm64be":
+		c.BigEndian = true
+		fallthrough
 	case "arm64":
 		c.PtrSize = 8
 		c.RegSize = 8
@@ -484,7 +487,7 @@ func (c *Config) buildRecipes(arch string) {
 				})
 		}
 
-	case "arm64":
+	case "arm64", "arm64be":
 		// Rationale (for M2 ultra):
 		// - multiply is 3 cycles.
 		// - add/neg/sub/shift are 1 cycle.

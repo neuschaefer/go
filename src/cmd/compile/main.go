@@ -30,6 +30,7 @@ var archInits = map[string]func(*ssagen.ArchInfo){
 	"amd64":    amd64.Init,
 	"arm":      arm.Init,
 	"arm64":    arm64.Init,
+	"arm64be":  arm64.Init,
 	"loong64":  loong64.Init,
 	"mips":     mips.Init,
 	"mipsle":   mips.Init,

@@ -136,6 +136,20 @@ var ArchARM64 = &Arch{
 	FixedFrameSize: 8, // LR
 }
 
+var ArchARM64BE = &Arch{
+	Name:           "arm64be",
+	Family:         ARM64,
+	ByteOrder:      binary.BigEndian,
+	PtrSize:        8,
+	RegSize:        8,
+	MinLC:          4,
+	Alignment:      1,
+	CanMergeLoads:  true,
+	CanJumpTable:   true,
+	HasLR:          true,
+	FixedFrameSize: 8, // LR
+}
+
 var ArchLoong64 = &Arch{
 	Name:           "loong64",
 	Family:         Loong64,
@@ -273,6 +287,7 @@ var Archs = [...]*Arch{
 	ArchAMD64,
 	ArchARM,
 	ArchARM64,
+	ArchARM64BE,
 	ArchLoong64,
 	ArchMIPS,
 	ArchMIPSLE,

@@ -60,7 +60,9 @@ func Set(GOARCH string, shared bool) *Arch {
 	case "arm":
 		return archArm()
 	case "arm64":
-		return archArm64()
+		return archArm64(&arm64.Linkarm64)
+	case "arm64be":
+		return archArm64(&arm64.Linkarm64be)
 	case "loong64":
 		return archLoong64(&loong64.Linkloong64)
 	case "mips":
@@ -257,7 +259,7 @@ func archArm() *Arch {
 	}
 }
 
-func archArm64() *Arch {
+func archArm64(linkArch *obj.LinkArch) *Arch {
 	register := make(map[string]int16)
 	// Create maps for easy lookup of instruction names etc.
 	// Note that there is no list of names as there is for 386 and amd64.
@@ -310,7 +312,7 @@ func archArm64() *Arch {
 	instructions["BL"] = arm64.ABL
 
 	return &Arch{
-		LinkArch:       &arm64.Linkarm64,
+		LinkArch:       linkArch,
 		Instructions:   instructions,
 		Register:       register,
 		RegisterPrefix: registerPrefix,

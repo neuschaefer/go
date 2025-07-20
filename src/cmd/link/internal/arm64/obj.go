@@ -34,10 +34,19 @@ import (
 	"cmd/internal/objabi"
 	"cmd/internal/sys"
 	"cmd/link/internal/ld"
+	"internal/buildcfg"
 )
 
 func Init() (*sys.Arch, ld.Arch) {
 	arch := sys.ArchARM64
+	dynld := "/lib/ld-linux-aarch64.so.1"
+	musl := "/lib/ld-musl-aarch64.so.1"
+
+	if buildcfg.GOARCH == "arm64be" {
+		arch = sys.ArchARM64BE
+		dynld = "/lib/ld-linux-aarch64_be.so.1"
+		musl = "/lib/ld-musl-aarch64_be.so.1"
+	}
 
 	theArch := ld.Arch{
 		Funcalign:  funcAlign,
@@ -61,8 +70,8 @@ func Init() (*sys.Arch, ld.Arch) {
 
 		ELF: ld.ELFArch{
 			Androiddynld:   "/system/bin/linker64",
-			Linuxdynld:     "/lib/ld-linux-aarch64.so.1",
-			LinuxdynldMusl: "/lib/ld-musl-aarch64.so.1",
+			Linuxdynld:     dynld,
+			LinuxdynldMusl: musl,
 
 			Freebsddynld:   "/usr/libexec/ld-elf.so.1",
 			Openbsddynld:   "/usr/libexec/ld.so",

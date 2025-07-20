@@ -119,6 +119,9 @@ func (f *elfFile) goarch() string {
 	case elf.EM_ARM:
 		return "arm"
 	case elf.EM_AARCH64:
+		if f.elf.ByteOrder == binary.BigEndian {
+			return "arm64be"
+		}
 		return "arm64"
 	case elf.EM_LOONGARCH:
 		return "loong64"

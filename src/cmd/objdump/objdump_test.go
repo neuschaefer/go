@@ -163,7 +163,7 @@ func testDisasm(t *testing.T, srcfname string, printCode bool, printGnuAsm bool,
 		need = append(need, x86Need...)
 	case "arm":
 		need = append(need, armNeed...)
-	case "arm64":
+	case "arm64", "arm64be":
 		need = append(need, arm64Need...)
 	case "loong64":
 		need = append(need, loong64Need...)

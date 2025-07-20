@@ -8,10 +8,14 @@ import (
 	"cmd/compile/internal/ssa"
 	"cmd/compile/internal/ssagen"
 	"cmd/internal/obj/arm64"
+	"internal/buildcfg"
 )
 
 func Init(arch *ssagen.ArchInfo) {
 	arch.LinkArch = &arm64.Linkarm64
+	if buildcfg.GOARCH == "arm64be" {
+		arch.LinkArch = &arm64.Linkarm64be
+	}
 	arch.REGSP = arm64.REGSP
 	arch.MAXWIDTH = 1 << 50
 

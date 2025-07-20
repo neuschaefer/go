@@ -649,7 +649,7 @@ Architecture-specific environment variables:
 		The value can be followed by an option specifying how to implement floating point instructions.
 		Valid options are ,softfloat (default for 5) and ,hardfloat (default for 6 and 7).
 	GOARM64
-		For GOARCH=arm64, the ARM64 architecture for which to compile.
+		For GOARCH=arm64{,be}, the ARM64 architecture for which to compile.
 		Valid values are v8.0 (default), v8.{1-9}, v9.{0-5}.
 		The value can be followed by an option specifying extensions implemented by target hardware.
 		Valid options are ,lse and ,crypto.
@@ -956,7 +956,7 @@ The defined architecture feature build tags are:
 	  correspond to the amd64.v1, amd64.v2, and amd64.v3 feature build tags.
 	- For GOARCH=arm, GOARM=5, 6, and 7
 	  correspond to the arm.5, arm.6, and arm.7 feature build tags.
-	- For GOARCH=arm64, GOARM64=v8.{0-9} and v9.{0-5}
+	- For GOARCH=arm64{,be}, GOARM64=v8.{0-9} and v9.{0-5}
 	  correspond to the arm64.v8.{0-9} and arm64.v9.{0-5} feature build tags.
 	- For GOARCH=mips or mipsle,
 	  GOMIPS=hardfloat and softfloat

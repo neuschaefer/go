@@ -52,7 +52,7 @@ func main() {
 		arch, theArch = amd64.Init()
 	case "arm":
 		arch, theArch = arm.Init()
-	case "arm64":
+	case "arm64", "arm64be":
 		arch, theArch = arm64.Init()
 	case "loong64":
 		arch, theArch = loong64.Init()

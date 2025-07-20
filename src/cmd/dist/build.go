@@ -72,6 +72,7 @@ var okgoarch = []string{
 	"amd64",
 	"arm",
 	"arm64",
+	"arm64be",
 	"loong64",
 	"mips",
 	"mipsle",
@@ -1283,7 +1284,7 @@ func cmdenv() {
 	if goarch == "arm" {
 		xprintf(format, "GOARM", goarm)
 	}
-	if goarch == "arm64" {
+	if goarch == "arm64" || goarch == "arm64be" {
 		xprintf(format, "GOARM64", goarm64)
 	}
 	if goarch == "386" {
@@ -1784,6 +1785,7 @@ var cgoEnabled = map[string]bool{
 	"linux/amd64":     true,
 	"linux/arm":       true,
 	"linux/arm64":     true,
+	"linux/arm64be":   false,
 	"linux/loong64":   true,
 	"linux/ppc64":     false,
 	"linux/ppc64le":   true,
@@ -1829,6 +1831,7 @@ var cgoEnabled = map[string]bool{
 // See go.dev/issue/56679.
 var broken = map[string]bool{
 	"linux/sparc64":  true, // An incomplete port. See CL 132155.
+	"linux/arm64be":  true, // Broken, incomplete
 	"openbsd/mips64": true, // Broken: go.dev/issue/58110.
 	"windows/arm":    true, // Broken: go.dev/issue/68552.
 }
