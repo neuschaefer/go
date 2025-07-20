@@ -293,7 +293,7 @@ TestCases:
 			fmt.Fprintf(&buf, "#define REGISTER (CTR)\n")
 		case "arm":
 			fmt.Fprintf(&buf, "#define REGISTER (R0)\n")
-		case "arm64":
+		case "arm64", "arm64be":
 			ptrSize = 8
 			fmt.Fprintf(&buf, "#define REGISTER (R0)\n")
 		case "amd64":

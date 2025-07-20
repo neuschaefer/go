@@ -26,6 +26,12 @@ TEXT ·IndexByte<ABIInternal>(SB),NOSPLIT,$0-40
 // return
 //   R0: result
 TEXT ·IndexByteString<ABIInternal>(SB),NOSPLIT,$0-32
+#ifdef GOARCH_arm64be
+	// for some reason, R0/R1 are swapped on big endian. swap them back.
+	MOVD	R0, R5
+	MOVD	R1, R0
+	MOVD	R5, R1
+#endif
 	// Core algorithm:
 	// For each 32-byte chunk we calculate a 64-bit syndrome value,
 	// with two bits per byte. For each tuple, bit 0 is set if the
