@@ -169,7 +169,7 @@ func BuildModeSupported(compiler, buildmode, goos, goarch string) bool {
 
 	case "c-shared":
 		switch platform {
-		case "linux/amd64", "linux/arm", "linux/arm64", "linux/loong64", "linux/386", "linux/ppc64le", "linux/riscv64", "linux/s390x",
+		case "linux/amd64", "linux/arm", "linux/arm64", "linux/arm64be", "linux/loong64", "linux/386", "linux/ppc64le", "linux/riscv64", "linux/s390x",
 			"android/amd64", "android/arm", "android/arm64", "android/386",
 			"freebsd/amd64",
 			"darwin/amd64", "darwin/arm64",
@@ -225,7 +225,7 @@ func InternalLinkPIESupported(goos, goarch string) bool {
 	switch goos + "/" + goarch {
 	case "android/arm64",
 		"darwin/amd64", "darwin/arm64",
-		"linux/amd64", "linux/arm64", "linux/loong64", "linux/ppc64le",
+		"linux/amd64", "linux/arm64", "linux/arm64be", "linux/loong64", "linux/ppc64le",
 		"windows/386", "windows/amd64", "windows/arm", "windows/arm64":
 		return true
 	}

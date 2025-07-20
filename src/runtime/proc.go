@@ -773,7 +773,7 @@ func cpuinit(env string) {
 	case "arm":
 		armHasVFPv4 = cpu.ARM.HasVFPv4
 
-	case "arm64":
+	case "arm64", "arm64be":
 		arm64HasATOMICS = cpu.ARM64.HasATOMICS
 
 	case "loong64":

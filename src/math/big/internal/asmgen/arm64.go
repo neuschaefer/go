@@ -5,7 +5,8 @@
 package asmgen
 
 var ArchARM64 = &Arch{
-	Name:          "arm64",
+	Name:          "arm64x",
+	Build:         "arm64 || arm64be",
 	WordBits:      64,
 	WordBytes:     8,
 	CarrySafeLoop: true,
