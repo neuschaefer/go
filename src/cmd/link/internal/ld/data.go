@@ -277,6 +277,18 @@ func (st *relocSymState) relocsym(s loader.Sym, P []byte) {
 			}
 		}
 
+		byteOrder := target.Arch.ByteOrder
+		if target.IsARM64() && target.IsBigEndian() {
+			// ARM64be is special because instructions are still
+			// encoded in little-endian.
+			switch rt {
+			case objabi.R_CALLARM64, objabi.R_ADDRARM64, objabi.R_ARM64_PCREL_LDST8,
+			     objabi.R_ARM64_PCREL_LDST16, objabi.R_ARM64_PCREL_LDST32,
+			     objabi.R_ARM64_PCREL_LDST64:
+				byteOrder = binary.LittleEndian
+			}
+		}
+
 		var o int64
 		switch rt {
 		default:
@@ -286,11 +298,11 @@ func (st *relocSymState) relocsym(s loader.Sym, P []byte) {
 			case 1:
 				o = int64(P[off])
 			case 2:
-				o = int64(target.Arch.ByteOrder.Uint16(P[off:]))
+				o = int64(byteOrder.Uint16(P[off:]))
 			case 4:
-				o = int64(target.Arch.ByteOrder.Uint32(P[off:]))
+				o = int64(byteOrder.Uint32(P[off:]))
 			case 8:
-				o = int64(target.Arch.ByteOrder.Uint64(P[off:]))
+				o = int64(byteOrder.Uint64(P[off:]))
 			}
 			out, n, ok := thearch.Archreloc(target, ldr, syms, r, s, o)
 			if target.IsExternal() {
@@ -619,16 +631,16 @@ func (st *relocSymState) relocsym(s loader.Sym, P []byte) {
 			} else if o != int64(int16(o)) && o != int64(uint16(o)) {
 				st.err.Errorf(s, "non-pc-relative relocation %s address for %s is too big: %#x", rt, ldr.SymName(rs), uint64(o))
 			}
-			target.Arch.ByteOrder.PutUint16(P[off:], uint16(o))
+			byteOrder.PutUint16(P[off:], uint16(o))
 		case 4:
 			if (rt == objabi.R_PCREL || rt == objabi.R_CALL) && o != int64(int32(o)) {
 				st.err.Errorf(s, "pc-relative relocation %s address for %s is too big: %#x", rt, ldr.SymName(rs), o)
 			} else if o != int64(int32(o)) && o != int64(uint32(o)) {
 				st.err.Errorf(s, "non-pc-relative relocation %s address for %s is too big: %#x", rt, ldr.SymName(rs), uint64(o))
 			}
-			target.Arch.ByteOrder.PutUint32(P[off:], uint32(o))
+			byteOrder.PutUint32(P[off:], uint32(o))
 		case 8:
-			target.Arch.ByteOrder.PutUint64(P[off:], uint64(o))
+			byteOrder.PutUint64(P[off:], uint64(o))
 		}
 	}
 	if target.IsExternal() {

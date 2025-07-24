@@ -778,13 +778,8 @@ func archreloc(target *ld.Target, ldr *loader.Loader, syms *ld.ArchSyms, r loade
 
 			if target.IsWindows() {
 				var o0, o1 uint32
-				if target.IsBigEndian() {
-					o0 = uint32(val >> 32)
-					o1 = uint32(val)
-				} else {
-					o0 = uint32(val)
-					o1 = uint32(val >> 32)
-				}
+				o0 = uint32(val)
+				o1 = uint32(val >> 32)
 
 				// The first instruction (ADRP) has a 21-bit immediate field,
 				// and the second (ADD or LD/ST) has a 12-bit immediate field.
@@ -817,11 +812,7 @@ func archreloc(target *ld.Target, ldr *loader.Loader, syms *ld.ArchSyms, r loade
 					o1 |= ((xadd & 0xfff) >> 3) << 10
 				}
 
-				if target.IsBigEndian() {
-					val = int64(o0)<<32 | int64(o1)
-				} else {
-					val = int64(o1)<<32 | int64(o0)
-				}
+				val = int64(o1)<<32 | int64(o0)
 			}
 
 			return val, nExtReloc, isOk
@@ -864,14 +855,8 @@ func archreloc(target *ld.Target, ldr *loader.Loader, syms *ld.ArchSyms, r loade
 		}
 
 		var o0, o1 uint32
-
-		if target.IsBigEndian() {
-			o0 = uint32(val >> 32)
-			o1 = uint32(val)
-		} else {
-			o0 = uint32(val)
-			o1 = uint32(val >> 32)
-		}
+		o0 = uint32(val)
+		o1 = uint32(val >> 32)
 
 		o0 |= (uint32((t>>12)&3) << 29) | (uint32((t>>12>>2)&0x7ffff) << 5)
 		switch rt {
@@ -895,9 +880,6 @@ func archreloc(target *ld.Target, ldr *loader.Loader, syms *ld.ArchSyms, r loade
 		}
 
 		// when laid out, the instruction order must always be o1, o2.
-		if target.IsBigEndian() {
-			return int64(o0)<<32 | int64(o1), noExtReloc, true
-		}
 		return int64(o1)<<32 | int64(o0), noExtReloc, true
 
 	case objabi.R_ARM64_TLS_LE:
