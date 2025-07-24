@@ -88,6 +88,7 @@ var (
 	asmArch386      = asmArch{name: "386", bigEndian: false, stack: "SP", lr: false}
 	asmArchArm      = asmArch{name: "arm", bigEndian: false, stack: "R13", lr: true}
 	asmArchArm64    = asmArch{name: "arm64", bigEndian: false, stack: "RSP", lr: true, retRegs: []string{"R0", "F0"}, writeResult: []string{"SVC"}}
+	asmArchArm64BE  = asmArch{name: "arm64be", bigEndian: true, stack: "RSP", lr: true, retRegs: []string{"R0", "F0"}, writeResult: []string{"SVC"}}
 	asmArchAmd64    = asmArch{name: "amd64", bigEndian: false, stack: "SP", lr: false, retRegs: []string{"AX", "X0"}, writeResult: []string{"SYSCALL"}}
 	asmArchMips     = asmArch{name: "mips", bigEndian: true, stack: "R29", lr: true}
 	asmArchMipsLE   = asmArch{name: "mipsle", bigEndian: false, stack: "R29", lr: true}
@@ -104,6 +105,7 @@ var (
 		&asmArch386,
 		&asmArchArm,
 		&asmArchArm64,
+		&asmArchArm64BE,
 		&asmArchAmd64,
 		&asmArchMips,
 		&asmArchMipsLE,
