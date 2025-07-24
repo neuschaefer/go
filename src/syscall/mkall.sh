@@ -197,6 +197,19 @@ linux_arm)
 	mktypes="GOARCH=$GOARCH go tool cgo -godefs"
 	;;
 linux_arm64)
+	GOOSARCH_in=syscall_linux_arm64x.go
+	unistd_h=$(ls -1 /usr/include/asm/unistd.h /usr/include/asm-generic/unistd.h 2>/dev/null | head -1)
+	if [ "$unistd_h" = "" ]; then
+		echo >&2 cannot find unistd_64.h
+		exit 1
+	fi
+	mksysnum="./mksysnum_linux.pl $unistd_h"
+	# Let the type of C char be signed to make the bare syscall
+	# API consistent between platforms.
+	mktypes="GOARCH=$GOARCH go tool cgo -godefs -- -fsigned-char"
+	;;
+linux_arm64be)
+	GOOSARCH_in=syscall_linux_arm64x.go
 	unistd_h=$(ls -1 /usr/include/asm/unistd.h /usr/include/asm-generic/unistd.h 2>/dev/null | head -1)
 	if [ "$unistd_h" = "" ]; then
 		echo >&2 cannot find unistd_64.h
