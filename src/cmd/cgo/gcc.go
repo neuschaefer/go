@@ -1730,6 +1730,8 @@ func gccMachine() []string {
 		if goos == "darwin" {
 			return []string{"-arch", "arm64"}
 		}
+	case "arm64be":
+		return []string{"-mbig-endian"}
 	case "386":
 		return []string{"-m32"}
 	case "arm":
